@@ -18,6 +18,20 @@ function reducer(state = INITIAL_STATE, action) {
       images: action.images
     });
   }
+  if (action.type === 'previous') {
+    let nextIndex = state.currentIndex - 1;
+    if (nextIndex < 0) {
+      nextIndex = state.images.length - 1;
+    }
+    return Object.assign({}, state, {
+      currentIndex: nextIndex
+    });
+  }
+  if (action.type === 'select') {
+    return Object.assign({}, state, {
+      currentIndex: action.index
+    });
+  }
   return state;
 }
 

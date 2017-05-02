@@ -18,13 +18,20 @@ let store = Redux.createStore(
 );
 
 class Gallery extends React.Component {
+  select(idx) {
+    store.dispatch({
+      type: 'select',
+      index: idx
+    });
+  }
   render() {
     let state = store.getState();
     let currentImage = state.images[state.currentIndex];
     let next = () => store.dispatch({type: 'next'});
+    let prev = () => store.dispatch({type: 'previous'});
     return (
       <div>
-        <button>
+        <button onClick={prev}>
           Previous
         </button>
         <button onClick={next}>
@@ -34,7 +41,7 @@ class Gallery extends React.Component {
           <img src={currentImage} key={currentImage}/>
         <div>
           {state.images.map((imageUrl, idx) =>
-            <img key={idx} src={imageUrl} height="60"/>
+            <img key={idx} src={imageUrl} height="60" onClick={() => this.select(idx)}/>
           )}
         </div>
       </div>
